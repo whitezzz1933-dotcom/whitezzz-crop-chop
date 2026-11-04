@@ -1,0 +1,84 @@
+{
+  "name": "crop-chop",
+  "version": "0.1.0-alpha",
+  "description": "Crop Chop (Режь-Кромсай): нарезка изображений с переносом фрагментов в Figma",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
+  },
+  "author": "Whitezzz Studio",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^45.2.1",
+    "electron-builder": "^26.18.0"
+  },
+  "build": {
+    "appId": "studio.whitezzz.cropchop",
+    "productName": "Crop Chop",
+    "copyright": "Copyright (c) 2026 Whitezzz Studio",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "core.js",
+      "state.js",
+      "view.js",
+      "tool-grid.js",
+      "tool-shape.js",
+      "tool-lasso.js",
+      "tool-poly.js",
+      "tool-clear.js",
+      "export.js",
+      "input.js",
+      "app.js",
+      "window-menu.js",
+      "hints.js",
+      "ui-steppers.js",
+      "reopen.js",
+      "index.html",
+      "style.css",
+      "extra.css",
+      
+      "icon.ico",
+      "package.json",
+      "LICENSE",
+      "brand/mark-dark.svg", "brand/wordmark-en.svg", "brand/wordmark-ru.png", "brand/blade.svg", "brand/slogan.png"
+    ],
+    "win": {
+      "icon": "icon.ico",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Crop Chop",
+      "installerIcon": "icon.ico",
+      "uninstallerIcon": "icon.ico",
+      "deleteAppDataOnUninstall": false,
+      "artifactName": "CropChop-Setup-${version}.${ext}"
+    },
+    "portable": {
+      "artifactName": "CropChop-${version}-portable.${ext}"
+    }
+  }
+}

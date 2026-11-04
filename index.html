@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Crop Chop — Режь-Кромсай</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="extra.css">
+</head>
+<body>
+<header>
+  <div class="brand"><img src="brand/mark-dark.svg" alt="" class="logo"><img src="brand/wordmark-en.svg" alt="Crop Chop" class="wm-img wm-img-en"><img src="brand/wordmark-ru.png" alt="Режь Кромсай" class="wm-img wm-img-ru"><em>by Whitezzz Studio</em></div>
+  <div class="spacer"></div>
+  <div id="imgInfo"></div>
+  <button id="btnSettings" title="Окно и обновление (правый клик по шапке тоже открывает)">⚙ Настройки</button>
+  <button id="btnFit" title="Вписать в окно (F)">Вписать</button>
+  <button id="btnOpen">Открыть изображение</button>
+</header>
+
+<main>
+  <aside id="tools">
+    <div class="group-title">Инструмент</div>
+    <button class="tool active" data-tool="grid" title="Сетка линиями (G)">▦ Сетка</button>
+    <button class="tool" data-tool="frame" title="Рамка по краям картинки (R)">▢ Рамка</button>
+    <button class="tool" data-tool="square" title="Квадрат 1:1 (S)">◻ Квадрат</button>
+    <button class="tool" data-tool="circle" title="Круг (C)">○ Круг</button>
+    <button class="tool" data-tool="ellipse" title="Эллипс (E)">⬭ Эллипс</button>
+    <button class="tool" data-tool="lasso" title="Лассо по точкам (L)">✎ Лассо</button>
+    <button class="tool" data-tool="polygon" title="Многоугольник (P)">⬡ Многоугольник</button>
+    <div class="group-title" style="margin-top:14px">Подсказки</div>
+    <div id="hints" class="hints"></div>
+  </aside>
+
+  <section id="stage">
+    <canvas id="cv"></canvas>
+    <div id="empty"><img src="brand/blade.svg" alt="" class="e-blade"><img src="brand/slogan.png" alt="Режь, кромсай, тащи, верстай" class="e-slogan-img"><div class="e-sub">Режь лист, тащи в макет</div><div class="e-hint">Нажми сюда, чтобы выбрать изображение<br>или перетащи сюда PNG или JPG</div></div>
+  </section>
+
+  <aside id="panel">
+    <div class="row">
+      <button id="btnUndo" title="Отменить (Ctrl+Z)">↶ Отменить</button>
+      <button id="btnRedo" title="Вернуть (Ctrl+Y)">↷ Вернуть</button>
+    </div>
+
+    <div id="gridPanel">
+      <div class="group-title">Сетка</div>
+      <div class="row">
+        <label>Столбцов <input id="cols" type="number" min="1" max="40" value="3"></label>
+        <label>Строк <input id="rows" type="number" min="1" max="40" value="3"></label>
+      </div>
+      <button id="btnEven">Расставить равномерно</button>
+      <div class="row">
+        <button id="btnAddV">+ Вертикальная</button>
+        <button id="btnAddH">+ Горизонтальная</button>
+      </div>
+      <button id="btnDelLine">Удалить выбранную линию</button>
+      <button id="btnClearLines">Очистить все линии</button>
+      <button id="btnSkipMode" aria-pressed="false">Пропуск ячеек: выкл</button>
+      <button id="btnSkipReset">Вернуть все ячейки</button>
+      <label class="chk"><input id="optNums" type="checkbox" checked> Показывать номера ячеек</label>
+      <label class="chk"><input id="optSkipEmpty" type="checkbox"> Не вырезать пустые ячейки</label>
+      <div id="smartBox">
+        <button id="btnSmart">Умная сетка по промежуткам</button>
+        <div class="row">
+          <label>Шум % <input id="sgNoise" type="number" min="0" max="50" value="1"></label>
+          <label>Промежуток px <input id="sgGap" type="number" min="1" max="2000" value="8"></label>
+        </div>
+      </div>
+      <div class="muted">Тяни линию мышью. Выбранная линия белая, Delete удаляет её.</div>
+      <div id="gridInfo" class="info"></div>
+    </div>
+
+    <div id="shapePanel" style="display:none">
+      <div class="group-title" id="shapeTitle">Фигура</div>
+      <div class="muted" id="shapeHelp"></div>
+      <div id="shapeInfo" class="info"></div>
+      <div id="polyFields" hidden>
+        <div class="row">
+          <label>Сторон <input id="pgSides" type="number" min="3" max="12" value="6"></label>
+          <label>Поворот° <input id="pgRot" type="number" min="-180" max="180" value="0"></label>
+        </div>
+        <label>Скругление <input id="pgRound" type="range" min="0" max="100" value="0"></label>
+        <button id="btnPgEdit">Править точки (станет лассо)</button>
+      </div>
+      <div id="lassoBtns" hidden>
+        <button id="btnLassoClose">Замкнуть контур</button>
+        <button id="btnLassoBack">Убрать последнюю точку</button>
+      </div>
+      <button id="btnClearShape">Убрать фигуру</button>
+    </div>
+
+    <div id="trimBox">
+      <label class="chk"><input id="trimOn" type="checkbox"> Обрезать пустые поля</label>
+      <div class="row">
+        <label>Допуск % <input id="trimTol" type="number" min="0" max="100" value="12"></label>
+        <label>Отступ px <input id="trimPad" type="number" min="0" max="500" value="8"></label>
+      </div>
+    </div>
+    <button id="btnCut" class="primary big">Вырезать</button>
+    <div class="muted">Enter или двойной клик внутри фигуры тоже вырезают. Файлы сохраняются в папку output.</div>
+    <div class="author">by Whitezzz Studio<br>Telegram: @Whitezz</div>
+  </aside>
+</main>
+
+<footer>
+  <div class="strip-head">
+    <div id="stripInfo"></div>
+    <button id="btnBack" hidden>↩ К исходному листу</button>
+    <button id="btnReopen">Открыть для нарезки</button>
+    <button id="btnCopy">Копировать выбранную</button>
+    <button id="btnFolder">Папка результатов</button>
+    <button id="btnClear">Очистить ленту</button>
+  </div>
+  <div id="pieces"></div>
+</footer>
+<div id="toast"></div>
+
+<script src="core.js"></script>
+<script src="state.js"></script>
+<script src="view.js"></script>
+<script src="tool-grid.js"></script>
+<script src="tool-shape.js"></script>
+<script src="tool-lasso.js"></script>
+<script src="tool-poly.js"></script>
+<script src="tool-clear.js"></script>
+<script src="export.js"></script>
+<script src="input.js"></script>
+<script src="app.js"></script>
+<script src="window-menu.js"></script>
+<script src="hints.js"></script>
+<script src="ui-steppers.js"></script>
+<script src="reopen.js"></script>
+</body>
+</html>

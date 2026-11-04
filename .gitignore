@@ -1,0 +1,30 @@
+node_modules/
+.cache/
+output/
+dist/
+window-settings.json
+*.before-*.js
+*.before-*.html
+*.before-*.css
+
+patch-brand.js
+*.lnk
+# repo cleanup
+*.before-*
+patch-*.js
+/blade.svg
+/icon-new.ico
+/icon.svg
+/slogan-light.png
+/wordmark-en-fixed.svg
+/test-piece-1.png
+/CropChop-ROADMAP.md
+brand/Group*
+brand/Vector*
+brand/CROP CHOP*
+brand/РЕЖЬ КРОМСАЙ*
+brand/wordmark-ru.svg
+# repo cleanup 2
+brand/icon-new.ico
+brand/slogan-light.png
+brand/wordmark-en-fixed.svg
