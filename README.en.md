@@ -26,14 +26,14 @@ You have one big sheet with dozens of icons (from generation, a scan or an asset
 - **"Open for slicing":** take a cut piece from the strip and slice it again.
 - **Strip:** all cut pieces collect at the bottom; select, copy or clear them.
 - **Drag and drop:** pull a piece from the strip into Figma or File Explorer.
-- **Undo and redo** for all actions.
-- **Works offline.** Images never leave your computer.
+- **Undo and redo** for markup (lines and shapes).
+- **Works offline.** The app does not send your images to the internet: the code is open, you can check.
 
 The interface is currently in Russian only; an English interface is planned.
 
 ## Download and install
 
-All files are on the [Releases](https://github.com/whitezzz1933-dotcom/whitezzz-crop-chop/releases) page. Windows 10 or 11, 64-bit.
+All files are on the [Releases](https://github.com/whitezzz1933-dotcom/whitezzz-crop-chop/releases) page. Tested on Windows 11 (64-bit); Windows 10 should work but was not tested.
 
 | File | What it is |
 |---|---|
@@ -41,7 +41,7 @@ All files are on the [Releases](https://github.com/whitezzz1933-dotcom/whitezzz-
 | `CropChop-0.1.0-alpha-portable.exe` | portable version, installs nothing |
 | `SHA256SUMS.txt` | file checksums |
 
-**Windows warning (SmartScreen).** The files are not code-signed yet, so Windows may show a blue "Windows protected your PC" window. This is expected for an unsigned app. To run it, click "More info", then "Run anyway". Signing is planned after the release. If you prefer not to take it on trust, verify the checksum.
+**Windows warning (SmartScreen).** The files are not code-signed yet, so Windows may show a blue "Windows protected your PC" window. This is expected for an unsigned app. To run it, click "More info", then "Run anyway". Signing is planned, if it works out. Run only files from this Releases page, and only after checking the checksum. Copies on other sites or in messengers are not mine.
 
 **Verify the checksum** (PowerShell):
 
@@ -49,12 +49,7 @@ All files are on the [Releases](https://github.com/whitezzz1933-dotcom/whitezzz-
 Get-FileHash .\CropChop-Setup-0.1.0-alpha.exe -Algorithm SHA256
 ```
 
-The result must match the line in `SHA256SUMS.txt`. For version 0.1.0-alpha:
-
-```
-31CF4EA216D1D13472C438E10336094E6B2B1C25D95A99A5DAD82A08BF334E86  CropChop-Setup-0.1.0-alpha.exe
-747405748667721C0EF58ECC30D19D12F0F323192A0D4F6EA7FA6AC1B480FE40  CropChop-0.1.0-alpha-portable.exe
-```
+The result must match the line in `SHA256SUMS.txt`. The checksums are in that file and in the description of every release (they change when the app is rebuilt).
 
 **Where results are saved.** In the `output` folder next to the program. If that folder is not writable, the app uses `Documents\Crop Chop\output`. The "Results folder" button opens it.
 
@@ -67,6 +62,8 @@ The result must match the line in `SHA256SUMS.txt`. For version 0.1.0-alpha:
 
 ## Roadmap
 
+Plans, no promises or dates.
+
 - free grid nodes and "Merge cells";
 - English interface next to Russian;
 - X, Y, width, height and proportion fields;
@@ -76,7 +73,7 @@ The result must match the line in `SHA256SUMS.txt`. For version 0.1.0-alpha:
 
 ## ☕ Buy the author a coffee
 
-Crop Chop is free and will stay free. If it helped you and you want to say thanks, you can support the author: [Yandex Tips](https://tips.yandex.ru/guest/payment/3995636) or by the QR code. It is voluntary and changes nothing: support and updates are the same for everyone.
+Crop Chop is free. If it helped you and you want to say thanks, you can support the author: [Yandex Tips](https://tips.yandex.ru/guest/payment/3995636) or by the QR code. It is voluntary and changes nothing.
 
 <img src="docs/support-qr.png" alt="QR code for tips" width="220">
 
@@ -99,10 +96,12 @@ npm start        # run in development mode
 
 Build installer and portable: `npx electron-builder`. Output appears in `dist`.
 
+**Keywords:** image slicer, sprite sheet splitter, icon sheet cutter, crop and drag to Figma, Electron, Windows.
+
 ## License and credits
 
 Program code: [MIT](LICENSE).
 
-Logo, mark, lettering and slogan © Whitezzz Studio. The MIT license covers the code only: the Crop Chop name, logo and visual identity are not licensed. The logo and slogan images use the fonts Advaken Sans, Beladonna Modern (Alexandra Gophmann) and Onder (Alisa Oleinikova); according to the catalogs they were downloaded from, they are free to use. Font files are not included in the repository or in the app; the lettering is embedded as images.
+Logo, mark, lettering and slogan © Whitezzz Studio. The MIT license covers the code only: the Crop Chop name, logo and visual identity are not licensed. The logo and slogan images use the fonts Advaken Sans (Vladislav Borisov), Beladonna Modern (Alexandra Gophmann) and Onder (Alisa Oleinikova). Font files are not included in the repository or in the app; the lettering is embedded as images.
 
 Contact: Telegram [@Whitezz](https://t.me/Whitezz) (spelled with two z's) · channel [whitezzz_design](https://t.me/whitezzz_design). I have no other contacts and I never ask for payment for "activation", "tax" or "insurance". Bugs and ideas: [Issues](https://github.com/whitezzz1933-dotcom/whitezzz-crop-chop/issues).
